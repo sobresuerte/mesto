@@ -8,23 +8,23 @@ let formElement = document.querySelector('.popup__form')
 let nameInput = formElement.querySelector('#name')
 let jobInput = formElement.querySelector('#description')
 
+let profile = document.querySelector('.profile');
+let profileName = profile.querySelector('.profile__name');
+let profileJob = profile.querySelector('.profile__subtitle');
+
 // Открытие и закрытие попапа редактирования имени профиля
-editButton.addEventListener('click', function () {
+function openPopup() {
   popup.classList.add('popup_opened');
   nameInput.value = "Мария Семенова";
   jobInput.value = "В поисках прекрасного";
-})
-
-closeButton.addEventListener('click', function () {
-  popup.classList.remove('popup_opened');
-})
-
-
-
-function editProfile () {
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
 }
+
+function closePopup() {
+  popup.classList.remove('popup_opened');
+}
+
+editButton.addEventListener('click', openPopup);
+closeButton.addEventListener('click',closePopup);
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
@@ -34,14 +34,14 @@ function formSubmitHandler (evt) {
                                                 // О том, как это делать, расскажем позже.
 
     // Получите значение полей jobInput и nameInput из свойства value
-    nameInput.textContent = nameInput.value;
-    jobInput.textContent = jobInput.value;
+    let name = nameInput.value;
+    let description = jobInput.value;
     // Выберите элементы, куда должны быть вставлены значения полей
-    nameInput.value;
-    jobInput.value;
     // Вставьте новые значения с помощью textContent
-    nameInput.textContent = 'Мария Семенова';
-    jobInput.textContent = '';
+    profileName.textContent = name;
+    profileJob.textContent = description;
+
+    closePopup();
 }
 
 // Прикрепляем обработчик к форме:
