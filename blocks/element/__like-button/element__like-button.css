@@ -9,6 +9,12 @@
   bottom: 30px;
   right: 15px;
   border: none;
+  transition: opacity .3s ease;
+  cursor: pointer;
+}
+
+.element__like-button:hover {
+  opacity: .5;
 }
 
 .element__like-button:active {

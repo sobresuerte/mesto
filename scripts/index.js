@@ -1,22 +1,22 @@
-let closeButton = document.querySelector('.popup__close-button');
-let popup = document.querySelector('.popup');
-let editButton = document.querySelector('.profile__edit-button');
+const closeButton = document.querySelector('.popup__close-button');
+const popup = document.querySelector('.popup');
+const editButton = document.querySelector('.profile__edit-button');
 
 // Находим форму в DOM
-let formElement = document.querySelector('.popup__form')
+const formElement = document.querySelector('.popup__form')
 // Находим поля формы в DOM
-let nameInput = formElement.querySelector('#name')
-let jobInput = formElement.querySelector('#description')
+const nameInput = formElement.querySelector('#name')
+const jobInput = formElement.querySelector('#description')
 
-let profile = document.querySelector('.profile');
-let profileName = profile.querySelector('.profile__name');
-let profileJob = profile.querySelector('.profile__subtitle');
+const profile = document.querySelector('.profile');
+const profileName = profile.querySelector('.profile__name');
+const profileJob = profile.querySelector('.profile__subtitle');
 
 // Открытие и закрытие попапа редактирования имени профиля
 function openPopup() {
   popup.classList.add('popup_opened');
-  nameInput.value = "Мария Семенова";
-  jobInput.value = "В поисках прекрасного";
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 }
 
 function closePopup() {
@@ -28,7 +28,7 @@ closeButton.addEventListener('click',closePopup);
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function formSubmitHandler (evt) {
+function handleProfileFormSubmit (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                                                 // Так мы можем определить свою логику отправки.
                                                 // О том, как это делать, расскажем позже.
@@ -46,4 +46,4 @@ function formSubmitHandler (evt) {
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', handleProfileFormSubmit);

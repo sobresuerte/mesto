@@ -1,4 +1,4 @@
-.popup__name {
+.popup__input {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -10,6 +10,6 @@
   padding: 0 0 13px;
 }
 
-.popup__name:nth-child(2) {
+.popup__input:nth-child(2) {
   margin-bottom: 30px;
 }
