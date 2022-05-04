@@ -2,4 +2,11 @@
   width: 282px;
   height: 282px;
   object-fit: cover;
+
+  cursor: pointer;
+  transition: opacity .3s ease;
+}
+
+.element__image:hover {
+  opacity: .8;
 }

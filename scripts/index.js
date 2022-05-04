@@ -83,18 +83,22 @@ function closeAddPopup() {
   closePopup(popupAddPhoto);
 };
 
+function closePopupShowPhoto() {
+  closePopup(popupShowPhoto);
+};
 
 editButton.addEventListener('click', openEditProfile);
 addButton.addEventListener('click', openAddPopup);
 editCloseButton.addEventListener('click', closeEditPopup);
 addCloseButton.addEventListener('click', closeAddPopup);
+showCloseButton.addEventListener('click', closePopupShowPhoto);
 
 // Обработчик «отправки» формы
 function handleProfileFormSubmit (evt) {
     evt.preventDefault(); 
     
-    let name = nameInput.value;
-    let description = jobInput.value;
+    const name = nameInput.value;
+    const description = jobInput.value;
 
     profileName.textContent = name;
     profileJob.textContent = description;
@@ -107,7 +111,7 @@ function handleDeleteCard (evt) {
 };
 
 function handleLikeCard (evt) {
-  evt.target.closest('.element__like-button').classList.toggle('element__like-button_active');
+  evt.target.classList.toggle('element__like-button_active');
 };
 
 function handleAddFormSubmit (evt) {
@@ -115,7 +119,7 @@ function handleAddFormSubmit (evt) {
 
   addNewCard();
   closePopup(popupAddPhoto);
-}
+};
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -123,7 +127,7 @@ formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 formAddPhoto.addEventListener('submit', handleAddFormSubmit);
 
 // Генерация карточки
-const generateCards = (cardsData) => {
+const generateCard = (cardsData) => {
   const newCard = cardTemplate.cloneNode(true);
 
   const elementTitle = newCard.querySelector('.element__title');
@@ -151,36 +155,31 @@ const generateCards = (cardsData) => {
     openPopup(popupShowPhoto);
   };
 
-  function closePopupShowPhoto() {
-    closePopup(popupShowPhoto);
-  };
-
   elementPhoto.addEventListener('click', openPopupShowPhoto);
-  showCloseButton.addEventListener('click', closePopupShowPhoto);
 
   return newCard;
-}
+};
 
 // Шаблон
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.element');
 
 // Рендер карточек
 
-const renderCards = (cardsData) => {
-  cardsContainer.prepend(generateCards(cardsData));
+const renderCard = (cardsData) => {
+  cardsContainer.prepend(generateCard(cardsData));
 };
 
 initialCards.forEach((cardsData) => {
-  renderCards(cardsData);
+  renderCard(cardsData);
 });
 
 // Добавление карточки
 const addNewCard = () => {
-  renderCards({
+  renderCard({
     name: titleInput.value,
     link: linkInput.value
   });
 
-  titleInput.value = "";
-  linkInput.value = "";
+  titleInput.reset();
+  linkInput.reset();
 };
