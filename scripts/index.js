@@ -131,6 +131,7 @@ const generateCards = (cardsData) => {
 
   const elementPhoto = newCard.querySelector('.element__image');
   elementPhoto.src = cardsData.link;
+  elementPhoto.alt = cardsData.name;
   
   const deleteButton = newCard.querySelector('.element__delete-button');
   deleteButton.addEventListener('click', handleDeleteCard);
