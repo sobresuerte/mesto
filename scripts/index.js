@@ -180,6 +180,5 @@ const addNewCard = () => {
     link: linkInput.value
   });
 
-  titleInput.reset();
-  linkInput.reset();
+  formAddPhoto.reset();
 };
