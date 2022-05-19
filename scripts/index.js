@@ -28,30 +28,27 @@ const initialCards = [
 
 // DOM элементы
 
-const popup = document.querySelectorAll('.popup');
+const popups = document.querySelectorAll('.popup');
 
 const popupEditProfile = document.querySelector('#popup-edit-profile');
 const formEditProfile = popupEditProfile.querySelector('.popup__form');
 const nameInput = popupEditProfile.querySelector('#name');
 const jobInput = popupEditProfile.querySelector('#description');
-const editCloseButton = popupEditProfile.querySelector('.popup__close-button');
 const profileSubmitButton = popupEditProfile.querySelector('.popup__submit-button');
 
 const popupAddPhoto = document.querySelector('#popup-add-photo');
 const formAddPhoto = popupAddPhoto.querySelector('.popup__form');
 const titleInput = popupAddPhoto.querySelector('#title');
 const linkInput = popupAddPhoto.querySelector('#link');
-const addCloseButton = popupAddPhoto.querySelector('.popup__close-button');
-const addSubmitButton = popupAddPhoto.querySelector('.popup__submit-button');
+const cardSubmitButton = popupAddPhoto.querySelector('.popup__submit-button');
 
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
 const profileJob = profile.querySelector('.profile__subtitle');
-const editButton = profile.querySelector('.profile__edit-button');
-const addButton = profile.querySelector('.profile__add-button');
+const profileEditButton = profile.querySelector('.profile__edit-button');
+const profileAddButton = profile.querySelector('.profile__add-button');
 
 const popupShowPhoto = document.querySelector('#popup-show-photo');
-const showCloseButton = popupShowPhoto.querySelector('.popup__close-button');
 const bigPhoto = popupShowPhoto.querySelector('.popup__image');
 const photoCaption = popupShowPhoto.querySelector('.popup__caption');
 
@@ -68,13 +65,6 @@ function closePopup(popup) {
   document.removeEventListener('keyup', popupEscHandler);
 };
 
-function popupOverlayClickHandler(evt) {
-  const popupOpened = document.querySelector('.popup_opened');
-  if (evt.target === evt.currentTarget) {
-    closePopup(popupOpened);
-  }
-}
-
 function popupEscHandler(evt) {
   const popupOpened = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
@@ -89,20 +79,22 @@ function openEditProfile() {
   openPopup(popupEditProfile);
 };
 
-editButton.addEventListener('click', () => {
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
+      closePopup(evt.currentTarget);
+    }
+  });
+})
+
+profileEditButton.addEventListener('click', () => {
   openEditProfile();
   enableSubmitButton(profileSubmitButton, 'popup__submit-button_disabled');
 });
-addButton.addEventListener('click', () => {
+profileAddButton.addEventListener('click', () => {
   openPopup(popupAddPhoto);
-  disabledSubmitButton(addSubmitButton, 'popup__submit-button_disabled');
+  disabledSubmitButton(cardSubmitButton, 'popup__submit-button_disabled');
 });
-editCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
-addCloseButton.addEventListener('click', () => closePopup(popupAddPhoto));
-showCloseButton.addEventListener('click', () => closePopup(popupShowPhoto));
-popupEditProfile.addEventListener('click', popupOverlayClickHandler);
-popupAddPhoto.addEventListener('click', popupOverlayClickHandler);
-popupShowPhoto.addEventListener('click', popupOverlayClickHandler);
 
 // Обработчик «отправки» формы
 function handleProfileFormSubmit (evt) {
