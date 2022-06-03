@@ -22,6 +22,10 @@ const profileJob = profile.querySelector('.profile__subtitle');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const profileAddButton = profile.querySelector('.profile__add-button');
 
+const popupShowPhoto = document.querySelector('#popup-show-photo'); 
+const bigPhoto = popupShowPhoto.querySelector('.popup__image'); 
+const photoCaption = popupShowPhoto.querySelector('.popup__caption'); 
+
 const cardsContainer = document.querySelector('.elements');
 
 const options = {
@@ -36,17 +40,17 @@ const options = {
 // Открытие и закрытие попапа
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keyup', popupEscHandler);
+  document.addEventListener('keyup', handleEscClose);
 };
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keyup', popupEscHandler);
+  document.removeEventListener('keyup', handleEscClose);
 };
 
-function popupEscHandler(evt) {
-  const popupOpened = document.querySelector('.popup_opened');
+function handleEscClose(evt) {
   if (evt.key === 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened');
     closePopup(popupOpened);
   }
 }
@@ -58,6 +62,14 @@ function openEditProfile() {
   openPopup(popupEditProfile);
 };
 
+const handleCardClick = (name, link) => {
+  bigPhoto.src = link;
+  bigPhoto.alt = name;
+  photoCaption.textContent = name;
+
+  openPopup(popupShowPhoto);
+}
+
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
@@ -68,11 +80,11 @@ popups.forEach((popup) => {
 
 profileEditButton.addEventListener('click', () => {
   openEditProfile();
-  validateProfile.enableSubmitButton();
+  validateProfile.resetValidation();
 });
 profileAddButton.addEventListener('click', () => {
   openPopup(popupAddPhoto);
-  validatePhotoCard.disabledSubmitButton();
+  validatePhotoCard.resetValidation();
 });
 
 // Обработчик «отправки» формы
@@ -101,7 +113,7 @@ formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 formAddPhoto.addEventListener('submit', handleAddFormSubmit);
 
 // Генерация карточки
-const generateCard = (cardsData) => new Card(cardsData, '#card-template').generateCard();
+const generateCard = (cardsData) => new Card(cardsData, '#card-template', handleCardClick).generateCard();
 
 // Рендер карточек
 

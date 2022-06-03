@@ -1,14 +1,10 @@
-import {openPopup} from './index.js';
-
 export default class Card {
-  _popupShowPhoto = document.querySelector('#popup-show-photo');
-  _bigPhoto = this._popupShowPhoto.querySelector('.popup__image');
-  _photoCaption = this._popupShowPhoto.querySelector('.popup__caption');
 
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -20,28 +16,24 @@ export default class Card {
   }
 
   _handleLikeCard() {
-    this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
-  }
-
-  _handleCardOpen(data) {
-    this._bigPhoto.src = this._link;
-    this._bigPhoto.alt = this._name;
-    this._photoCaption.textContent = this._name;
-
-    openPopup(this._popupShowPhoto);
+    this._likeButton.classList.toggle('element__like-button_active');
   }
 
   _setEventListeners() {
-    this._element.querySelector('.element__delete-button').addEventListener('click', () => {
+    this._deletButton = this._element.querySelector('.element__delete-button');
+    this._likeButton = this._element.querySelector('.element__like-button');
+    this._cardImage = this._element.querySelector('.element__image');
+
+    this._deletButton.addEventListener('click', () => {
         this._handleDeleteCard();
     });
 
-    this._element.querySelector('.element__like-button').addEventListener('click', () => {
+    this._likeButton.addEventListener('click', () => {
         this._handleLikeCard();
     });
 
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-        this._handleCardOpen();
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link)
     });
   }
 
@@ -49,8 +41,8 @@ export default class Card {
     this._getTemplate();
     this._setEventListeners();
 
-    this._element.querySelector('.element__image').src = this._link;
-    this._element.querySelector('.element__image').alt = this._name; 
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name; 
     this._element.querySelector('.element__title').textContent = this._name;
 
     return this._element;
