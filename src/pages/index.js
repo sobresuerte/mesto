@@ -43,16 +43,17 @@ const userInfo = new UserInfo({
 
 // class PopupWithForm - edit profile
 
-const popupEdit = new PopupWithForm(popupEditProfile, () => {
-    userInfo.setUserInfo(nameInput, jobInput);
+const popupEdit = new PopupWithForm(popupEditProfile, (data) => {
+    const { name, description } = data;
+    userInfo.setUserInfo(name, description);
 });
 
 popupEdit.setEventListeners();
 
 profileEditButton.addEventListener('click', () => {
-  const userData = userInfo.getUserInfo();
-  nameInput.value = userData.name;
-  jobInput.value = userData.job;
+  const { name, job } = userInfo.getUserInfo();
+  nameInput.value = name;
+  jobInput.value = job;
 
   popupEdit.open();
   validateProfile.resetValidation();
@@ -77,7 +78,10 @@ cardList.renderItems();
 
 const popupAdd = new PopupWithForm(popupAddPhoto,
   (cardsData) => {
-  const card = newCard(cardsData);
+  const card = newCard({
+    name: cardsData.title,
+    link: cardsData.link
+  });
   
   cardList.addItem(card);
 }
